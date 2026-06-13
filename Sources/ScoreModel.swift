@@ -551,7 +551,8 @@ final class ScoreModel: ObservableObject {
                      city: comp.venue?.address?.city ?? "",
                      networks: networks,
                      roundSlug: event.season?.slug ?? "group-stage",
-                     gamecastURL: gamecast)
+                     gamecastURL: gamecast,
+                     period: comp.period ?? 1)
     }
 }
 

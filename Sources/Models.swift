@@ -86,6 +86,7 @@ struct SBCompetition: Decodable {
     let status: SBStatus
     let venue: SBVenue?
     let broadcasts: [SBBroadcast]?
+    let period: Int?
 }
 
 struct SBCompetitor: Decodable {
@@ -284,6 +285,7 @@ struct Match: Identifiable {
     let networks: [String]
     let roundSlug: String
     let gamecastURL: URL?
+    let period: Int
 
     var isLive: Bool { state == .live }
 }

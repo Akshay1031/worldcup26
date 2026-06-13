@@ -101,20 +101,33 @@ struct GuideRow: View {
                             .font(.system(size: 7))
                             .foregroundStyle(.yellow)
                     }
-                    let scoreText: String = {
-                        if m.isLive {
-                            if entry.league == .cricket {
-                                if m.home.scoreText != nil || m.away.scoreText != nil {
-                                    return "\(m.home.abbrev) \(m.home.scoreText ?? "—")–\(m.away.scoreText ?? "—") \(m.away.abbrev)"
-                                }
-                            } else if let h = m.home.score, let a = m.away.score {
-                                return "\(m.home.abbrev) \(h)–\(a) \(m.away.abbrev)"
+                    if m.isLive && entry.league == .cricket {
+                        let interimText = m.period <= 2 ? "(1st Inn)" : "(2nd Inn)"
+                        HStack(spacing: 3) {
+                            Text(m.home.abbrev)
+                            if let hText = m.home.scoreText {
+                                Text(hText)
+                            } else {
+                                Text(interimText)
+                                    .foregroundStyle(Color(red: 0.36, green: 0.52, blue: 1.0))
                             }
+                            Text("–")
+                            if let aText = m.away.scoreText {
+                                Text(aText)
+                            } else {
+                                Text(interimText)
+                                    .foregroundStyle(Color(red: 0.36, green: 0.52, blue: 1.0))
+                            }
+                            Text(m.away.abbrev)
                         }
-                        return "\(m.home.abbrev) v \(m.away.abbrev)"
-                    }()
-                    Text(scoreText)
                         .font(.system(.caption, design: .rounded).weight(.semibold))
+                    } else if m.isLive, let h = m.home.score, let a = m.away.score {
+                        Text("\(m.home.abbrev) \(h)–\(a) \(m.away.abbrev)")
+                            .font(.system(.caption, design: .rounded).weight(.semibold))
+                    } else {
+                        Text("\(m.home.abbrev) v \(m.away.abbrev)")
+                            .font(.system(.caption, design: .rounded).weight(.semibold))
+                    }
                 }
                 if !m.networks.isEmpty {
                     Text("📺 \(m.networks.prefix(3).joined(separator: " · "))")
