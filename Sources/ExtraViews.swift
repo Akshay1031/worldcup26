@@ -101,9 +101,19 @@ struct GuideRow: View {
                             .font(.system(size: 7))
                             .foregroundStyle(.yellow)
                     }
-                    Text(m.isLive && m.home.score != nil
-                         ? "\(m.home.abbrev) \(m.home.score ?? 0)–\(m.away.score ?? 0) \(m.away.abbrev)"
-                         : "\(m.home.abbrev) v \(m.away.abbrev)")
+                    let scoreText: String = {
+                        if m.isLive {
+                            if entry.league == .cricket {
+                                if m.home.scoreText != nil || m.away.scoreText != nil {
+                                    return "\(m.home.abbrev) \(m.home.scoreText ?? "—")–\(m.away.scoreText ?? "—") \(m.away.abbrev)"
+                                }
+                            } else if let h = m.home.score, let a = m.away.score {
+                                return "\(m.home.abbrev) \(h)–\(a) \(m.away.abbrev)"
+                            }
+                        }
+                        return "\(m.home.abbrev) v \(m.away.abbrev)"
+                    }()
+                    Text(scoreText)
                         .font(.system(.caption, design: .rounded).weight(.semibold))
                 }
                 if !m.networks.isEmpty {

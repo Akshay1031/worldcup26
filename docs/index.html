@@ -525,8 +525,8 @@ function guideRowHTML(e) {
   const when = m.state === "live"
     ? `<span style="color:var(--red);font-weight:800;font-size:10px"><span class="dot"></span>LIVE</span>`
     : `<span style="font-weight:700">${fmtTime(m.ko)}</span>`;
-  const score = m.state === "live" && m.home.score != null
-    ? `${esc(m.home.ab)} ${m.home.score}–${m.away.score} ${esc(m.away.ab)}`
+  const score = m.state === "live" && (m.home.scoreText != null || m.away.scoreText != null)
+    ? `${esc(m.home.ab)} ${m.home.scoreText ?? "—"}–${m.away.scoreText ?? "—"} ${esc(m.away.ab)}`
     : `${esc(m.home.ab)} v ${esc(m.away.ab)}`;
   return `<div class="row">
     <span style="min-width:64px">${when}</span><span>${e.em}</span>
