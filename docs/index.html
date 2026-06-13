@@ -563,14 +563,12 @@ function scorersHTML() {
 function cricketCardHTML(m) {
   const side = t => {
     const fav = state.favs.has(`cricket:${t.id}`);
-    const interimText = m.period <= 2 ? "(1st Inn)" : "(2nd Inn)";
-    const scoreVal = t.scoreText ? esc(t.scoreText) : `<span style="color:#5c86ff">${interimText}</span>`;
     return `<div class="cricket-side ${t.win ? "w" : ""}">
       ${t.logo ? `<img src="${esc(t.logo)}" alt="" loading="lazy">` : ""}
       <span class="nm2">${t.site ? `<a class="tlink" href="${esc(t.site)}" target="_blank" rel="noopener">${esc(t.name)}</a>` : esc(t.name)}</span>
       <span class="star" style="cursor:pointer;color:${fav ? "var(--gold)" : "var(--dim)"};font-size:11px"
             onclick="toggleFav('cricket','${esc(t.id)}')">${fav ? "★" : "☆"}</span>
-      <span class="cs">${scoreVal}</span></div>`;
+      <span class="cs">${esc(t.scoreText || "—")}</span></div>`;
   };
   const chip = m.state === "live" ? `<span class="chip live"><span class="dot"></span>LIVE${m.detail && m.detail.toLowerCase() !== "live" ? " · " + esc(m.detail) : ""}</span>`
     : m.state === "post" ? `<span class="chip ft">${esc(m.detail || "Result")}</span>`

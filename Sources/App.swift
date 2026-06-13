@@ -271,20 +271,11 @@ struct CricketCard: View {
                     }
                     .buttonStyle(.plain)
                     Spacer()
-                    if let scoreText = side.scoreText {
-                        Text(scoreText)
-                            .font(.system(size: 11, weight: side.winner ? .bold : .regular,
-                                          design: .monospaced))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.7)
-                    } else {
-                        let interimText = match.period <= 2 ? "(1st Inn)" : "(2nd Inn)"
-                        Text(interimText)
-                            .font(.system(size: 11, weight: .bold, design: .rounded))
-                            .foregroundStyle(Color(red: 0.36, green: 0.52, blue: 1.0))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.7)
-                    }
+                    Text(side.scoreText ?? "—")
+                        .font(.system(size: 11, weight: side.winner ? .bold : .regular,
+                                      design: .monospaced))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                 }
             }
             Divider().overlay(.white.opacity(0.08))
